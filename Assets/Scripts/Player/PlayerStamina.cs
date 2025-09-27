@@ -15,7 +15,8 @@ public class PlayerStamina : MonoBehaviour
     private PlayerMovement playerMovement; 
     private bool boosting;
 
-
+    [Header("References")]
+    public PlayerInventory inventory;
 
     void Start()
     { 
@@ -25,11 +26,11 @@ public class PlayerStamina : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))//&& food
+        if (Input.GetKeyDown(KeyCode.E) && inventory.food.amount>0)//&& food
         {
             currentStamina = Mathf.Min(currentStamina + staminaChargeAmount, maxStamina);
             //food--;
-        
+            inventory.food.amount--;
         }
 
         if (Input.GetMouseButtonDown(1))
