@@ -2,33 +2,29 @@ using UnityEngine;
 
 public class PauseOnClick : MonoBehaviour
 {
-    private bool isPaused = false;
+    public static bool isPaused = false; 
 
     void OnMouseDown()
     {
         if (!isPaused)
-        {
             PauseGame();
-        }
     }
 
     void Update()
     {
         if (isPaused && Input.GetKeyDown(KeyCode.Space))
-        {
             ResumeGame();
-        }
     }
 
     private void PauseGame()
     {
-        Time.timeScale = 0f; 
         isPaused = true;
+        Time.timeScale = 0f;
     }
 
     private void ResumeGame()
     {
-        Time.timeScale = 1f; 
         isPaused = false;
+        Time.timeScale = 1f;
     }
 }

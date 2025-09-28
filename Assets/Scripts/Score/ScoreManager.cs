@@ -11,9 +11,33 @@ public class ScoreManager : MonoBehaviour
     [Header("UI")]
     public TextMeshProUGUI scoreText;
 
+    [Header("Auto Score Settings")]
+    public float tickInterval = 0.1f;
+    public int tickAmount = 1;        
+    private float tickTimer = 0f;
+
+    public static ScoreManager Instance;
+
+    void Awake()
+    {
+        Instance = this;
+    }
+
     void Start()
     {
         UpdateUI();
+
+    }
+
+    void Update()
+    {
+         if (PauseOnClick.isPaused) return;
+        tickTimer += Time.unscaledDeltaTime;
+        if (tickTimer >= tickInterval)
+        {
+            tickTimer = 0f;
+            AddScore(tickAmount);
+        }
     }
 
     public void AddScore(int amount)

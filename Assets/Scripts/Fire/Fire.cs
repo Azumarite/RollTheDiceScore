@@ -16,6 +16,7 @@ public class Fire : MonoBehaviour
 
     void Update()
     {
+        if (PauseOnClick.isPaused) return;
         currentLife -= decayRate * Time.deltaTime;
         currentLife = Mathf.Clamp(currentLife, endLife, maxLife);
 
@@ -27,6 +28,8 @@ public class Fire : MonoBehaviour
                 inventory.wood.amount--; 
                 currentLife = Mathf.Min(currentLife + addLifeAmount, maxLife);
                 Debug.Log("Added wood! Fire life: " + currentLife);
+                if (ScoreManager.Instance != null)
+                    ScoreManager.Instance.AddScore(100);
             }
             else
             {
