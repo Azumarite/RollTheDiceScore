@@ -7027,18 +7027,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5795ed8f640f8b748ad15b3d4dbfc3d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tool:
-    itemName: Tool
+  axe:
+    itemName: Axe
     amount: 1
+    icon: {fileID: 21300000, guid: 254609b7fada52e4aa2891bfb6f7968e, type: 3}
+    worldPrefab: {fileID: 0}
   wood:
     itemName: Wood
-    amount: 3
-  food:
-    itemName: Food
     amount: 5
-  money:
-    itemName: Money
+    icon: {fileID: 21300000, guid: ce581a8c725d3cc41a7d0660d868bfe2, type: 3}
+    worldPrefab: {fileID: 0}
+  meat:
+    itemName: Meat
+    amount: 10
+    icon: {fileID: 21300000, guid: c27f49c7a5be9834090b1f0c1fed9af4, type: 3}
+    worldPrefab: {fileID: 0}
+  cookedMeat:
+    itemName: Cooked Meat
+    amount: 1
+    icon: {fileID: 21300000, guid: 35dc75a94b2c2c44ba663c3cc0e71d18, type: 3}
+    worldPrefab: {fileID: 0}
+  gold:
+    itemName: Gold
     amount: 20
+    icon: {fileID: 21300000, guid: 91b963a67889cb440a521f0bbc242968, type: 3}
+    worldPrefab: {fileID: 0}
+  shotgun:
+    itemName: Shotgun
+    amount: 0
+    icon: {fileID: 21300000, guid: 84e2c91d54c2b894db3616a55383a882, type: 3}
+    worldPrefab: {fileID: 0}
+  bullet:
+    itemName: Bullet
+    amount: 0
+    icon: {fileID: 21300000, guid: 9a28366837cc0ce4d8f3393cdb3f4c09, type: 3}
+    worldPrefab: {fileID: 0}
+  saplings:
+    itemName: Saplings
+    amount: 0
+    icon: {fileID: 21300000, guid: eba4c95bb34776543b86f7d55d22fad7, type: 3}
+    worldPrefab: {fileID: 0}
 --- !u!1 &1576005950
 GameObject:
   m_ObjectHideFlags: 0
@@ -12349,7 +12377,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 2aa0273e1c8527345acaea7ad3ba5742, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

@@ -26,11 +26,11 @@ public class PlayerStamina : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E) && inventory.food.amount>0)//&& food
+        if (Input.GetKeyDown(KeyCode.E) && inventory.cookedMeat.amount>0)//&& food
         {
             currentStamina = Mathf.Min(currentStamina + staminaChargeAmount, maxStamina);
             //food--;
-            inventory.food.amount--;
+            inventory.cookedMeat.amount--;
         }
 
         if (Input.GetMouseButtonDown(1))
