@@ -99,9 +99,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 570dbccb3eb987546908b9b7fb6a7d0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cookTime: 5
-  cookRange: 1.5
+  cookTime: 50
+  cookRange: 4
   cookedMeatPrefab: {fileID: 8060489608587482563, guid: 80f18ebceb713104ab009f47d581d4f7, type: 3}
+  amount: 1
 --- !u!58 &845666805764971957
 CircleCollider2D:
   m_ObjectHideFlags: 0
