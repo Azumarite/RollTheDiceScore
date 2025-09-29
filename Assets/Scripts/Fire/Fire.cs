@@ -49,7 +49,7 @@ public class Fire : MonoBehaviour
         return Vector3.Distance(player.position, transform.position) <= interactDistance;
     }
 
-    private void GameOver()
+   public void GameOver()
     {
         Debug.Log("Fire went out! Game Over!");
         Time.timeScale = 0f; // pause the game

@@ -18,6 +18,7 @@ public class ScoreManager : MonoBehaviour
 
     public static ScoreManager Instance;
 
+
     void Awake()
     {
         Instance = this;
@@ -31,7 +32,7 @@ public class ScoreManager : MonoBehaviour
 
     void Update()
     {
-         if (PauseOnClick.isPaused) return;
+         if (PauseOnClick.isPaused||Time.timeScale==0) return;
         tickTimer += Time.unscaledDeltaTime;
         if (tickTimer >= tickInterval)
         {
