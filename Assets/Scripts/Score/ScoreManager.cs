@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 
 public class ScoreManager : MonoBehaviour
@@ -7,32 +6,37 @@ public class ScoreManager : MonoBehaviour
     [Header("Score Settings")]
     public int maxScore = 9999999;
     public int currentScore = 0;
+    public int highScore = 0;
 
     [Header("UI")]
     public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI highScoreText;
 
     [Header("Auto Score Settings")]
     public float tickInterval = 0.1f;
-    public int tickAmount = 1;        
+    public int tickAmount = 1;
     private float tickTimer = 0f;
 
     public static ScoreManager Instance;
 
-
     void Awake()
     {
-        Instance = this;
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
+
+        // Load high score
+        highScore = PlayerPrefs.GetInt("HighScore", 0);
     }
 
     void Start()
     {
         UpdateUI();
-
     }
 
     void Update()
     {
-         if (PauseOnClick.isPaused||Time.timeScale==0) return;
+        if (PauseOnClick.isPaused || Time.timeScale == 0) return;
+
         tickTimer += Time.unscaledDeltaTime;
         if (tickTimer >= tickInterval)
         {
@@ -43,18 +47,29 @@ public class ScoreManager : MonoBehaviour
 
     public void AddScore(int amount)
     {
-        if (0!=1)
+        currentScore += amount;
+        currentScore = Mathf.Clamp(currentScore, 0, maxScore);
+
+        // Update high score if needed
+        if (currentScore > highScore)
         {
-            currentScore += amount;
-            currentScore = Mathf.Clamp(currentScore, 0, maxScore);
+            highScore = currentScore;
+            PlayerPrefs.SetInt("HighScore", highScore);
+            PlayerPrefs.Save();
         }
-            UpdateUI();
-        
+
+        UpdateUI();
     }
 
     public void SetScore(int amount)
     {
         currentScore = Mathf.Clamp(amount, 0, maxScore);
+        if (currentScore > highScore)
+        {
+            highScore = currentScore;
+            PlayerPrefs.SetInt("HighScore", highScore);
+            PlayerPrefs.Save();
+        }
         UpdateUI();
     }
 
@@ -62,5 +77,8 @@ public class ScoreManager : MonoBehaviour
     {
         if (scoreText != null)
             scoreText.text = currentScore.ToString("N0");
+
+        if (highScoreText != null)
+            highScoreText.text = "High Score: " + highScore.ToString("N0");
     }
 }

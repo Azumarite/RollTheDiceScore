@@ -51,7 +51,14 @@ public class Fire : MonoBehaviour
 
    public void GameOver()
     {
+        MusicManager.TriggerGameOverMusic();
+
         Debug.Log("Fire went out! Game Over!");
         Time.timeScale = 0f; // pause the game
+        GameOverUI ui = FindObjectOfType<GameOverUI>();
+        if (ui != null && ScoreManager.Instance != null)
+        {
+            ui.ShowGameOver(ScoreManager.Instance.currentScore);
+        }
     }
 }

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using System.Collections;
 
 public class DiceOfFaith : MonoBehaviour
@@ -8,6 +9,7 @@ public class DiceOfFaith : MonoBehaviour
     public float rollInterval = 180f; // 3 minutes
     public Sprite[] diceSprites;      // 6 dice face sprites
     public Image diceImage;           // UI to show dice face
+    public TextMeshProUGUI countdownText; // countdown text
 
     [Header("References")]
     public PlayerInventory playerInventory;
@@ -23,13 +25,25 @@ public class DiceOfFaith : MonoBehaviour
     public Transform thiefSpawnPoint;
 
     private int lastRollValue = 1;
+    private float timeUntilNextRoll;
 
     void Start()
     {
         if (diceSprites.Length != 6)
             Debug.LogError("Assign exactly 6 dice sprites!");
 
+        timeUntilNextRoll = rollInterval;
         StartCoroutine(AutoRollRoutine());
+    }
+
+    void Update()
+    {
+        // Update countdown
+        if (timeUntilNextRoll > 0)
+        {
+            timeUntilNextRoll -= Time.deltaTime;
+            countdownText.text = $"Dice of Faith in: {Mathf.CeilToInt(timeUntilNextRoll)}s";
+        }
     }
 
     private IEnumerator AutoRollRoutine()
@@ -38,6 +52,7 @@ public class DiceOfFaith : MonoBehaviour
         {
             yield return new WaitForSeconds(rollInterval);
             RollDice();
+            timeUntilNextRoll = rollInterval; // reset countdown
         }
     }
 
@@ -52,9 +67,12 @@ public class DiceOfFaith : MonoBehaviour
 
         switch (lastRollValue)
         {
-            case 1: StartRain(); break;
-            case 2: SpawnBear(); break;
-            case 3: SpawnThief(); break;
+            case 1: StartRain();
+                MusicManager.TriggerEventMusic(); break;
+            case 2: SpawnBear();
+                MusicManager.TriggerEventMusic(); break;
+            case 3: SpawnThief();
+                MusicManager.TriggerEventMusic(); break;
             case 4: Debug.Log("Nothing happens..."); break;
             case 5: WindyEvent(); break;
             case 6: Debug.Log("Reserved for future event."); break;
@@ -62,28 +80,31 @@ public class DiceOfFaith : MonoBehaviour
     }
 
     // ---------- Events ----------
-
-    private void StartRain()
+   private void StartRain()
+{
+    Debug.Log("It starts raining!");
+    if (rainPrefab != null && fire != null)
     {
-        Debug.Log("It starts raining!");
-        if (rainPrefab != null && fire != null)
-        {
-            Instantiate(rainPrefab, fire.transform.position, Quaternion.identity, fire.transform);
-            StartCoroutine(RainEffectRoutine());
-        }
+        GameObject rainInstance = Instantiate(rainPrefab, fire.transform.position, Quaternion.identity, fire.transform);
+        StartCoroutine(RainEffectRoutine(rainInstance));
+    }
+}
+
+private IEnumerator RainEffectRoutine(GameObject rainInstance)
+{
+    float timer = 15f; // rain lasts 15 seconds
+    while (timer > 0f)
+    {
+        timer -= Time.deltaTime;
+        fire.currentLife -= fire.decayRate * 2 * Time.deltaTime; // stronger decay in rain
+        yield return null;
     }
 
-    private IEnumerator RainEffectRoutine()
-    {
-        float timer = 15f; // rain lasts 15 seconds
-        while (timer > 0f)
-        {
-            timer -= Time.deltaTime;
-            fire.currentLife -= fire.decayRate * 2 * Time.deltaTime; // double decay if no roof system yet
-            yield return null;
-        }
-        Debug.Log("Rain stopped.");
-    }
+    Debug.Log("Rain stopped.");
+
+    if (rainInstance != null)
+        Destroy(rainInstance);
+}
 
     private void SpawnBear()
     {

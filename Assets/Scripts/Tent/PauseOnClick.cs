@@ -1,8 +1,12 @@
 using UnityEngine;
+using TMPro;
 
 public class PauseOnClick : MonoBehaviour
 {
-    public static bool isPaused = false; 
+    public static bool isPaused = false;
+
+    [Header("UI")]
+    public TextMeshProUGUI pauseText; // assign the TMP text in Inspector
 
     void OnMouseDown()
     {
@@ -20,11 +24,17 @@ public class PauseOnClick : MonoBehaviour
     {
         isPaused = true;
         Time.timeScale = 0f;
+
+        if (pauseText != null)
+            pauseText.gameObject.SetActive(true); // show the text
     }
 
     private void ResumeGame()
     {
         isPaused = false;
         Time.timeScale = 1f;
+
+        if (pauseText != null)
+            pauseText.gameObject.SetActive(false); // hide the text
     }
 }
