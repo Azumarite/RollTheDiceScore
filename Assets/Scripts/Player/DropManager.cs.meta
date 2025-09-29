@@ -3,7 +3,20 @@ guid: 075570168e3a36047bab5847e877c792
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - dropPanel: {instanceID: 0}
+  - itemDropdown: {instanceID: 0}
+  - amountInput: {instanceID: 0}
+  - confirmDropButton: {instanceID: 0}
+  - exitButton: {instanceID: 0}
+  - playerInventory: {instanceID: 0}
+  - playerTransform: {instanceID: 0}
+  - woodPrefab: {instanceID: 0}
+  - meatPrefab: {instanceID: 0}
+  - cookedMeatPrefab: {instanceID: 0}
+  - saplingPrefab: {instanceID: 0}
+  - audioSource: {instanceID: 0}
+  - dropSound: {fileID: 8300000, guid: 4f79b766b4ae3ca41bc6d6724c7bc536, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

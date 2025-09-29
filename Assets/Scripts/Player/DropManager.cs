@@ -20,12 +20,22 @@ public class DropManager : MonoBehaviour
     public GameObject cookedMeatPrefab;
     public GameObject saplingPrefab;
 
+    [Header("Audio")]
+    public AudioSource audioSource;   // assign in inspector or auto-create
+    public AudioClip dropSound;
+
     void Start()
     {
         dropPanel.SetActive(false);
 
         confirmDropButton.onClick.AddListener(OnConfirmDrop);
         exitButton.onClick.AddListener(CloseDropPanel);
+
+        // create AudioSource if not assigned
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
     }
 
     public void ToggleDropPanel()
@@ -49,6 +59,12 @@ public class DropManager : MonoBehaviour
         if (playerInventory.RemoveItem(selectedItem, dropAmount))
         {
             SpawnDrop(selectedItem, dropAmount);
+
+            // Play drop sound
+            if (dropSound != null && audioSource != null)
+            {
+                audioSource.PlayOneShot(dropSound);
+            }
         }
     }
 

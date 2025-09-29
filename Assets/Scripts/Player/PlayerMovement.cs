@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
     public float jumpForce = 12f;
 
     [Header("Ground Check")]
-    public Transform groundCheck;       
+    public Transform groundCheck;
     public float groundCheckRadius = 0.2f;
     public LayerMask groundLayer;
 
@@ -16,7 +16,7 @@ public class PlayerMovement : MonoBehaviour
     private float moveInput;
     [HideInInspector] public float moveSpeedMultiplier = 1f;
 
-
+    private bool facingRight = true; // track player facing direction
 
     void Start()
     {
@@ -25,25 +25,26 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-      
         moveInput = Input.GetAxisRaw("Horizontal");
 
         if (Input.GetKeyDown(KeyCode.W) && isGrounded)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
         }
+
+        // Flip player if moving left/right
+        if (moveInput > 0 && !facingRight)
+            Flip();
+        else if (moveInput < 0 && facingRight)
+            Flip();
     }
 
     void FixedUpdate()
     {
-        
         rb.velocity = new Vector2(moveInput * moveSpeed * moveSpeedMultiplier, rb.velocity.y);
-
-        
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
     }
 
-    
     void OnDrawGizmosSelected()
     {
         if (groundCheck != null)
@@ -51,5 +52,13 @@ public class PlayerMovement : MonoBehaviour
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
         }
+    }
+
+    void Flip()
+    {
+        facingRight = !facingRight;
+        Vector3 scale = transform.localScale;
+        scale.x *= -1; // flip horizontally
+        transform.localScale = scale;
     }
 }
